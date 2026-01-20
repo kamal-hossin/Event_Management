@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Organizer Dashboard{% endblock %}
+
+{% block content %}
+<h2>Organizer Dashboard</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h3>My Events</h3>
+        <a href="{% url 'event_create' %}" class="btn btn-primary mb-3">Create Event</a>
+        <ul class="list-group">
+            {% for event in events %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ event.title }}
+                <div>
+                    <a href="{% url 'event_update' event.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'event_delete' event.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No events.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h3>Categories</h3>
+        <ul class="list-group">
+            {% for category in categories %}
+            <li class="list-group-item">{{ category.name }}</li>
+            {% empty %}
+            <li class="list-group-item">No categories.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

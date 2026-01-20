@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Events</h3>
+        <a href="{% url 'event_create' %}" class="btn btn-primary mb-3">Create Event</a>
+        <ul class="list-group">
+            {% for event in events %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ event.title }}
+                <div>
+                    <a href="{% url 'event_update' event.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'event_delete' event.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No events.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h3>Categories</h3>
+        <a href="{% url 'category_create' %}" class="btn btn-primary mb-3">Create Category</a>
+        <ul class="list-group">
+            {% for category in categories %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ category.name }}
+                <a href="{% url 'category_delete' category.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No categories.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="mt-4">
+    <h3>Users</h3>
+    <a href="{% url 'manage_users' %}" class="btn btn-primary">Manage Users</a>
+</div>
+{% endblock %}
