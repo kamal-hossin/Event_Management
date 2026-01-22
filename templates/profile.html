@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2>My Profile</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            {% if user.profile_picture %}
+                                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                            {% else %}
+                                <img src="/media/profile_pictures/default.jpg" alt="Default Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <h3>{{ user.get_full_name }}</h3>
+                            <p><strong>Username:</strong> {{ user.username }}</p>
+                            <p><strong>Email:</strong> {{ user.email }}</p>
+                            <p><strong>Phone:</strong> {{ user.phone_number|default:"Not provided" }}</p>
+                            <p><strong>Role:</strong>
+                                {% if user.groups.all %}
+                                    {% for group in user.groups.all %}
+                                        {{ group.name }}
+                                    {% endfor %}
+                                {% else %}
+                                    No role assigned
+                                {% endif %}
+                            </p>
+                            <p><strong>Member since:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
+                        <a href="{% url 'change_password' %}" class="btn btn-secondary">Change Password</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
